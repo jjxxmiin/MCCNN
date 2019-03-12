@@ -7,10 +7,13 @@ from tqdm import tqdm
 import request
 import math
 import zipfile
+import glob
 
 # https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/
 # https://people.eecs.berkeley.edu/~tinghuiz/projects/pix2pix/datasets/
 
+# 배치 만들기
+# next batch를 이용해 배치만큼 뽑아낸다
 class reader:
     def __init__(self, dir_name, batch_size=None,resize=None):
         self.dir_name = dir_name
@@ -52,6 +55,7 @@ class reader:
 
         return np.array(batch).astype(np.float32)
 
+# dataset download
 class dataset:
     def __init__(self,url,filename):
         self.url = url
@@ -85,57 +89,31 @@ class dataset:
             zf.close()
         print('unzip success')
 
-class ImageData:
-
-    def __init__(self, load_size, channels, augment_flag=False):
-        self.load_size = load_size
-        self.channels = channels
-        self.augment_flag = augment_flag
-
-    def image_processing(self, filename):
-        x = tf.read_file(filename)
-        x_decode = tf.image.decode_jpeg(x, channels=self.channels)
-        img = tf.image.resize_images(x_decode, [self.load_size, self.load_size])
-        img = tf.cast(img, tf.float32) / 127.5 - 1
-
-        if self.augment_flag :
-            augment_size = self.load_size + (30 if self.load_size == 256 else 15)
-            p = random.random()
-            if p > 0.5:
-                img = augmentation(img, augment_size)
-
-        return img
-
-
+# test 이미지 불러오기
 def load_test_data(image_path, size=256):
     img = misc.imread(image_path, mode='RGB')
     img = misc.imresize(img, [size, size])
     img = np.expand_dims(img, axis=0)
-    img = preprocessing(img)
+    img = input_normalization(img)
 
     return img
 
-def preprocessing(x):
-    x = x/127.5 - 1 # -1 ~ 1
-    return x
-
-def augmentation(image, augment_size):
-    seed = random.randint(0, 2 ** 31 - 1)
-    ori_image_shape = tf.shape(image)
-    image = tf.image.random_flip_left_right(image, seed=seed)
-    image = tf.image.resize_images(image, [augment_size, augment_size])
-    image = tf.random_crop(image, ori_image_shape, seed=seed)
-    return image
-
+# 이미지 저장하기
 def save_images(images, size, image_path):
-    return imsave(inverse_transform(images), size, image_path)
+    return imsave(input_denormalization(images), size, image_path)
 
-def inverse_transform(images):
-    return (images+1.) / 2
+# input_normalization
+def input_normalization(img):
+    return np.array(img) * (2.0 / 255.0) - 1
 
+def input_denormalization(img):
+    return (img + 1.) // 2
+
+# 이미지 저장
 def imsave(images, size, path):
     return misc.imsave(path, merge(images, size))
 
+# 이미지 합치기
 def merge(images, size):
     h, w = images.shape[1], images.shape[2]
     img = np.zeros((h * size[0], w * size[1], 3))
@@ -146,15 +124,13 @@ def merge(images, size):
 
     return img
 
-def show_all_variables():
-    model_vars = tf.trainable_variables()
-    slim.model_analyzer.analyze_vars(model_vars, print_info=True)
-
+# 폴더 있는지 확인
 def check_folder(log_dir):
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
     return log_dir
 
+# 배치이미지들 저장
 def batch_save(X,nh_nw,path):
     nh, nw = nh_nw
     h, w = X.shape[1], X.shape[2]
@@ -167,6 +143,7 @@ def batch_save(X,nh_nw,path):
 
     misc.imsave(path,img)
 
+# 붙어있는 이미지 나누기 : pix2pix
 def split_image(img):
     tmp = np.split(img,2,axis=2)
     img_A = tmp[0]
@@ -174,17 +151,11 @@ def split_image(img):
 
     return img_A,img_B
 
-# input_normalization
-def input_normalization(img):
-    return np.array(img) * (2.0 / 255.0) - 1
 
-def input_denormalization(img):
-    return (img + 1.) // 2
-
+# 모델 불러오기
 def load(checkpoint_dir,sess,saver):
     import re
     print(" [*] Reading checkpoints...")
-    #checkpoint_dir = os.path.join(checkpoint_dir, "model")
 
     ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
     if ckpt and ckpt.model_checkpoint_path:
@@ -197,10 +168,70 @@ def load(checkpoint_dir,sess,saver):
         print(" [*] Failed to find a checkpoint")
         return False, 0
 
-def save(checkpoint_dir, model_dir, step, sess, saver):
-    checkpoint_dir = os.path.join(checkpoint_dir, model_dir)
-
+# 모델 저장
+def save(checkpoint_dir, name, step, sess, saver):
     if not os.path.exists(checkpoint_dir):
         os.makedirs(checkpoint_dir)
 
-    saver.save(sess, os.path.join(checkpoint_dir, model_dir + '.model'), global_step=step)
+    saver.save(sess, os.path.join(checkpoint_dir, name + '.ckpt'), global_step=step)
+
+
+def get_file_id(filepath):
+    return os.path.splitext(os.path.basename(filepath))[0]
+
+# dataset list 경로 튜플로 저장 : mcnn
+def get_data_list(data_root, mode='train'):
+
+    if mode == 'train':
+        imagepath = os.path.join(data_root, 'train_data', 'images')
+        gtpath = os.path.join(data_root, 'train_data', 'ground-truth')
+
+    elif mode == 'valid':
+        imagepath = os.path.join(data_root, 'valid_data', 'images')
+        gtpath = os.path.join(data_root, 'valid_data', 'ground-truth')
+
+    else:
+        imagepath = os.path.join(data_root, 'test_data', 'images')
+        gtpath = os.path.join(data_root, 'test_data', 'ground-truth')
+
+    image_list = [file for file in glob.glob(os.path.join(imagepath,'*.jpg'))]
+    gt_list = []
+
+    for filepath in image_list:
+        file_id = get_file_id(filepath)
+        gt_file_path = os.path.join(gtpath, 'GT_'+ file_id + '.mat')
+        gt_list.append(gt_file_path)
+
+    xy = list(zip(image_list, gt_list))
+    # 셔플
+    random.shuffle(xy)
+    s_image_list, s_gt_list = zip(*xy)
+
+    return s_image_list, s_gt_list, len(s_image_list)
+
+def reshape_tensor(tensor):
+    """
+    Reshapes the input tensor appropriate to the network input
+    i.e. [1, tensor.shape[0], tensor.shape[1], 1]
+    :param tensor: input tensor
+    :return: reshaped tensor
+    """
+    r_tensor = np.reshape(tensor, newshape=(1, tensor.shape[0], tensor.shape[1], 1))
+    return r_tensor
+
+
+import matplotlib.image as mpimg
+import scipy.io
+a,b,c = get_data_list("G:\ShanghaiTech\part_A")
+
+
+# Load the image and ground truth
+train_image = misc.imread(a[1])
+train_d_map = scipy.io.loadmat(b[1])['image_info']
+
+train_image_r = np.reshape(train_image, newshape=(1, train_image.shape[0], train_image.shape[1], 3))
+train_d_map_r = np.reshape(train_d_map, newshape=(1, train_d_map.shape[0], train_d_map.shape[1], 1))
+
+print(train_image_r.shape)
+print(train_d_map_r.shape)
+

@@ -63,19 +63,35 @@ def merge_net(net5,net7,net9):
     return net
 
 
-'''
+def build(input_tensor, norm = False):
+    """
+    Builds the entire multi column cnn with 3 shallow nets with different input kernels and one fusing layer.
+    :param input_tensor: Input tensor image to the network.
+    :return: estimated density map tensor.
+    """
+    tf.summary.image('input', input_tensor, 1)
+    if norm:
+        input_tensor = tf.cast(input_tensor, tf.float32) * (1. / 255) - 0.5
+    net_1_output = net9(input_tensor)                # For column 1 with large receptive fields
+    net_2_output = net7(input_tensor)                # For column 2 with medium receptive fields
+    net_3_output = net5(input_tensor)                # For column 3 with small receptive fields
+    full_net = merge_net(net_1_output, net_2_output, net_3_output) # Fusing all the column output features
+    return full_net
+
+
 # network test
 
 import numpy as np
 
 if __name__ == "__main__":
-    x = tf.placeholder(tf.float32, [1, 200, 300, 1])
+    x = tf.placeholder(tf.float32, [1, 700, 800, 1])
     net = build(x)
     init = tf.initialize_all_variables()
     sess = tf.Session()
     sess.run(init)
-    d_map = sess.run(net,feed_dict={x:255*np.ones(shape=(1,200,300,1), dtype=np.float32)})
+    d_map = sess.run(net,feed_dict={x:255*np.ones(shape=(1,700,800,1), dtype=np.float32)})
     prediction = np.asarray(d_map)
+    print(prediction.shape)
     prediction = np.squeeze(prediction, axis=0)
     prediction = np.squeeze(prediction, axis=2)
-'''
+

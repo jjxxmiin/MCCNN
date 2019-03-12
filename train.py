@@ -1,32 +1,16 @@
-from utils import load,save
+from utils import load,save,get_data_list
 import tensorflow as tf
 import mcnn as model
 from ops import mse
 
-'''
-
-
-def save(checkpoint_dir, model_dir, step, sess, saver):
-    checkpoint_dir = os.path.join(checkpoint_dir, model_dir)
-
-    if not os.path.exists(checkpoint_dir):
-        os.makedirs(checkpoint_dir)
-
-    saver.save(sess, os.path.join(checkpoint_dir, '.ckpt'), global_step=step)
-
-saver = tf.train.Saver()
-
-checkpoint_dir = os.path.join(checkpoint_dir,'model')
-
-save(checkpoint_dir, counter, sess, saver)
-'''
-
-dataset_dir = "G:/dataset/people dataset/ShanghaiTech/part_A/"
+dataset_dir = "G:\dataset\people dataset\ShanghaiTech\part_A"
 log_dir = "logs"
 checkpoint_dir = "checkpoint"
 sample_dir = "sample"
 
 learning_rate = 0.01
+epoch = 200
+
 
 image = tf.placeholder(tf.float32,shape=[1,None,None,1])
 ground_truth = tf.placeholder(tf.float32,shape=[1,None,None,1])
@@ -65,7 +49,17 @@ with tf.Session() as sess:
     # model loading
     could_load, checkpoint_counter = load(checkpoint_dir, sess, saver)
 
+    if could_load:
+        print(checkpoint_counter)
+        print(" [*] Load SUCCESS")
+    else:
+        print(" [!] Load failed...")
 
+    for _ in range(epoch):
+        train_image_list, train_gt_list, iteration = get_data_list(dataset_dir,mode='train')
+
+        for i in range(iteration):
+            train_image = 
 
 
 
