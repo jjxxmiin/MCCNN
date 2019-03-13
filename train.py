@@ -2,6 +2,8 @@ from utils import load,save,get_data_list
 import tensorflow as tf
 import mcnn as model
 from ops import mse
+import matplotlib.image as mpimg
+import scipy.io as sio
 
 dataset_dir = "G:\dataset\people dataset\ShanghaiTech\part_A"
 log_dir = "logs"
@@ -12,7 +14,7 @@ learning_rate = 0.01
 epoch = 200
 
 
-image = tf.placeholder(tf.float32,shape=[1,None,None,1])
+image = tf.placeholder(tf.float32,shape=[1,None,None,3])
 ground_truth = tf.placeholder(tf.float32,shape=[1,None,None,1])
 
 net9 = model.net9(image)
@@ -59,7 +61,7 @@ with tf.Session() as sess:
         train_image_list, train_gt_list, iteration = get_data_list(dataset_dir,mode='train')
 
         for i in range(iteration):
-            train_image = 
+            _, cost = sess.run([train,loss],feed_dict={image : })
 
 
 
