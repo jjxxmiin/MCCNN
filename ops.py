@@ -9,30 +9,15 @@ weight_init = tf.random_normal_initializer(mean=0.0, stddev=0.02)
 weight_regularizer = None
 
 # ===================================== layer =================================================
-def conv(x, channels, kernel, stride, pad=1, padding='vaild', pad_type='zero', use_bias=True, scope='conv',mode=1):
+def conv(x, channels, kernel, stride, padding='vaild', use_bias=True, scope='conv'):
     with tf.variable_scope(scope):
-        if mode == 1:
-            if pad_type == 'zero' :
-                x = tf.pad(x, [[0, 0], [pad, pad], [pad, pad], [0, 0]], mode='CONSTANT')
-                # 0000000
-                # 0012300
-                # 0078900
-                # 0000000
-
-            if pad_type == 'reflect' :
-                x = tf.pad(x, [[0, 0], [pad, pad], [pad, pad], [0, 0]], mode='REFLECT')
-                # 9878987
-                # 3212321
-                # 9878987
-                # 3212321
-
-            x = tf.layers.conv2d(inputs=x,
-                                 filters=channels,
-                                 kernel_size=kernel,
-                                 padding=padding,
-                                 kernel_initializer=weight_init,
-                                 kernel_regularizer=weight_regularizer,
-                                 strides=stride, use_bias=use_bias)
+        x = tf.layers.conv2d(inputs=x,
+                             filters=channels,
+                             kernel_size=kernel,
+                             padding=padding,
+                             kernel_initializer=weight_init,
+                             kernel_regularizer=weight_regularizer,
+                             strides=stride, use_bias=use_bias)
 
         return x
 
@@ -111,12 +96,10 @@ def L2_loss(x, y):
 
 # MSE(Mean Squared Error) : (오차)값이 작을수록  정답에 가깝다.
 # yi는 신경망의 출력, ti는 정답 레이블(One-Hot인코딩)
-#def mse(y, t):
-#    return ((y-t)**2).mean(axis=None)
 
 # Y : 추정 density map
 # T : 실제 density map
 def mse(y,t):
-    loss = tf.losses.mean_squared_error(y, t)
+    loss = 0.5 * tf.reduce_sum(tf.square(tf.subtract(y, t)))
 
     return loss

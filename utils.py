@@ -210,16 +210,6 @@ def get_data_list(data_root, mode='train'):
 
     return s_image_list, s_gt_list, len(s_image_list)
 
-def reshape_tensor(tensor):
-    """
-    Reshapes the input tensor appropriate to the network input
-    i.e. [1, tensor.shape[0], tensor.shape[1], 1]
-    :param tensor: input tensor
-    :return: reshaped tensor
-    """
-    r_tensor = np.reshape(tensor, newshape=(1, tensor.shape[0], tensor.shape[1], 1))
-    return r_tensor
-
 def fspecial(ksize, sigma):
     """
     Generates 2d Gaussian kernel
@@ -468,15 +458,15 @@ def read_test_data(img_path, gt_path, scale=8, deconv_is_used=False, knn_phase=T
 
     return ori_crowd_img, scaled_density_map, crowd_count
 
-
+'''
 a,b,c = get_data_list("G:\ShanghaiTech\part_A")
-
+print(a)
+print(b)
 
 # Load the image and ground truth
 img, gt_dmp, gt_count = read_test_data(a[1],b[1],scale=4)
 
+print(img)
+'''
 
-print(img.shape)
-print(gt_dmp.shape)
-print(gt_count)
 
