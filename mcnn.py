@@ -3,43 +3,74 @@ import tensorflow as tf
 from tensorflow.contrib import slim
 
 
-def multi_column_cnn(inputs, scope='mcnn'):
+def multi_column_cnn_relu(inputs, scope='mcnn'):
     with tf.variable_scope(scope):
         with tf.variable_scope('large'):
             large_column = slim.conv2d(inputs, 16, [9, 9], padding='SAME', scope='conv_1_9x9')
-            large_column = relu(large_column)
+            #large_column = relu(large_column)
             large_column = slim.conv2d(large_column, 32, [7, 7], padding='SAME', scope='conv2_9x9')
-            large_column = relu(large_column)
+            #large_column = relu(large_column)
             large_column = slim.max_pool2d(large_column, [2, 2], 2, scope='pool1_9x9')
             large_column = slim.conv2d(large_column, 16, [7, 7], padding='SAME', scope='conv3_9x9')
-            large_column = relu(large_column)
+            #large_column = relu(large_column)
             large_column = slim.max_pool2d(large_column, [2, 2], 2, scope='pool2_9x9')
             large_column = slim.conv2d(large_column, 8, [7, 7], padding='SAME', scope='conv4_9x9')
-            large_column = relu(large_column)
+            #large_column = relu(large_column)
 
         with tf.variable_scope('medium'):
             medium_column = slim.conv2d(inputs, 20, [7, 7], padding='SAME', scope='conv1_7x7')
-            medium_column = relu(medium_column)
+            #medium_column = relu(medium_column)
             medium_column = slim.conv2d(medium_column, 40, [5, 5], padding='SAME', scope='conv2_7x7')
-            medium_column = relu(medium_column)
+            #medium_column = relu(medium_column)
             medium_column = slim.max_pool2d(medium_column, [2, 2], 2, scope='pool1_7x7')
             medium_column = slim.conv2d(medium_column, 20, [5, 5], padding='SAME', scope='conv3_7x7')
-            medium_column = relu(medium_column)
+            #medium_column = relu(medium_column)
             medium_column = slim.max_pool2d(medium_column, [2, 2], 2, scope='pool2_7x7')
             medium_column = slim.conv2d(medium_column, 10, [5, 5], padding='SAME', scope='conv4_7x7')
-            medium_column = relu(medium_column)
+            #medium_column = relu(medium_column)
 
         with tf.variable_scope('small'):
             small_column = slim.conv2d(inputs, 24, [5, 5], padding='SAME', scope='conv1_5x5')
-            small_column = relu(small_column)
+            #small_column = relu(small_column)
             small_column = slim.conv2d(small_column, 48, [3, 3], padding='SAME', scope='conv2_5x5')
-            small_column = relu(small_column)
+            #small_column = relu(small_column)
             small_column = slim.max_pool2d(small_column, [2, 2], 2, scope='pool1_5x5')
             small_column = slim.conv2d(small_column, 24, [3, 3], padding='SAME', scope='conv3_5x5')
-            small_column = relu(small_column)
+            #small_column = relu(small_column)
             small_column = slim.max_pool2d(small_column, [2, 2], 2, scope='pool2_5x5')
             small_column = slim.conv2d(small_column, 12, [3, 3], padding='SAME', scope='conv4_5x5')
-            small_column = relu(small_column)
+            #small_column = relu(small_column)
+
+        net = tf.concat([large_column, medium_column, small_column], axis=3)
+        dmp = slim.conv2d(net, 1, [1, 1], padding='SAME', scope='dmp_conv1')
+
+    return dmp
+
+def multi_column_cnn(inputs, scope='mcnn'):
+    with tf.variable_scope(scope):
+        with tf.variable_scope('large'):
+            large_column = slim.conv2d(inputs, 16, [9, 9], padding='SAME', scope='conv1')
+            large_column = slim.conv2d(large_column, 32, [7, 7], padding='SAME', scope='conv2')
+            large_column = slim.max_pool2d(large_column, [2, 2], 2, scope='pool1')
+            large_column = slim.conv2d(large_column, 16, [7, 7], padding='SAME', scope='conv3')
+            large_column = slim.max_pool2d(large_column, [2, 2], 2, scope='pool2')
+            large_column = slim.conv2d(large_column, 8, [7, 7], padding='SAME', scope='conv4')
+
+        with tf.variable_scope('medium'):
+            medium_column = slim.conv2d(inputs, 20, [7, 7], padding='SAME', scope='conv1')
+            medium_column = slim.conv2d(medium_column, 40, [5, 5], padding='SAME', scope='conv2')
+            medium_column = slim.max_pool2d(medium_column, [2, 2], 2, scope='pool1')
+            medium_column = slim.conv2d(medium_column, 20, [5, 5], padding='SAME', scope='conv3')
+            medium_column = slim.max_pool2d(medium_column, [2, 2], 2, scope='pool2')
+            medium_column = slim.conv2d(medium_column, 10, [5, 5], padding='SAME', scope='conv4')
+
+        with tf.variable_scope('small'):
+            small_column = slim.conv2d(inputs, 24, [5, 5], padding='SAME', scope='conv1')
+            small_column = slim.conv2d(small_column, 48, [3, 3], padding='SAME', scope='conv2')
+            small_column = slim.max_pool2d(small_column, [2, 2], 2, scope='pool1')
+            small_column = slim.conv2d(small_column, 24, [3, 3], padding='SAME', scope='conv3')
+            small_column = slim.max_pool2d(small_column, [2, 2], 2, scope='pool2')
+            small_column = slim.conv2d(small_column, 12, [3, 3], padding='SAME', scope='conv4')
 
         net = tf.concat([large_column, medium_column, small_column], axis=3)
         dmp = slim.conv2d(net, 1, [1, 1], padding='SAME', scope='dmp_conv1')

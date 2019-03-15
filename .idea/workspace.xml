@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="55dc8737-8dbc-442b-b8e7-e6d623f1442b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/train2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph.pbtxt" beforeDir="false" afterPath="$PROJECT_DIR$/graph.pbtxt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mcnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/mcnn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ops.py" beforeDir="false" afterPath="$PROJECT_DIR$/ops.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
@@ -20,8 +19,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1140">
-              <caret line="147" column="19" selection-start-line="147" selection-start-column="19" selection-end-line="147" selection-end-column="19" />
+            <state relative-caret-position="1533">
+              <caret line="505" column="3" selection-start-line="505" selection-start-column="3" selection-end-line="505" selection-end-column="3" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -29,13 +28,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/train.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../MCNN_REPRODUCTION/src/training.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="79" column="44" selection-start-line="79" selection-start-column="44" selection-end-line="79" selection-end-column="44" />
+            <state relative-caret-position="1096">
+              <caret line="121" column="8" lean-forward="true" selection-start-line="121" selection-start-column="8" selection-end-line="121" selection-end-column="8" />
               <folding>
-                <element signature="e#0#41#0" expanded="true" />
+                <element signature="e#87#110#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -44,8 +43,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ops.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1960">
-              <caret line="98" selection-start-line="98" selection-end-line="98" />
+            <state relative-caret-position="648">
+              <caret line="103" selection-start-line="103" selection-end-line="103" />
               <folding>
                 <element signature="e#49#72#0" expanded="true" />
               </folding>
@@ -53,35 +52,20 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/train.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1272">
+              <caret line="80" column="45" lean-forward="true" selection-start-line="80" selection-start-column="45" selection-end-line="80" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mcnn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="505">
-              <caret line="45" selection-start-line="45" selection-end-line="45" />
-              <folding>
-                <element signature="e#0#17#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../mygan/cyclegan/train.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="182" selection-start-line="182" selection-end-line="182" />
-              <folding>
-                <element signature="e#0#17#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../mygan/cyclegan/CycleGAN.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-500">
-              <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
+            <state relative-caret-position="273">
+              <caret line="77" column="14" selection-start-line="77" selection-start-column="14" selection-end-line="77" selection-end-column="14" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -102,6 +86,7 @@
     <findStrings>
       <find>misc</find>
       <find>save</find>
+      <find>data</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -110,19 +95,20 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/ops.py" />
         <option value="$PROJECT_DIR$/train2.py" />
         <option value="$PROJECT_DIR$/mcnn.py" />
+        <option value="$PROJECT_DIR$/utils.py" />
+        <option value="$PROJECT_DIR$/../MCNN_REPRODUCTION/src/training.py" />
         <option value="$PROJECT_DIR$/train.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="273" />
-    <option name="y" value="45" />
-    <option name="width" value="1218" />
-    <option name="height" value="1007" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="337" />
+    <option name="y" value="96" />
+    <option name="width" value="981" />
+    <option name="height" value="1032" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -144,7 +130,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../mygan/cyclegan/train.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../MCNN_REPRODUCTION/src/training.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -223,6 +209,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="training" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="people_count" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../MCNN_REPRODUCTION/src" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../MCNN_REPRODUCTION/src/training.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="utils" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="people_count" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -247,8 +254,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.train" />
-        <item itemvalue="Python.mcnn" />
+        <item itemvalue="Python.training" />
         <item itemvalue="Python.utils" />
+        <item itemvalue="Python.mcnn" />
         <item itemvalue="Python.ops" />
       </list>
     </recent_temporary>
@@ -276,22 +284,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="403" y="112" width="1218" height="1007" extended-state="0" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.3661749" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.40302068" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.371134" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.38790035" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32968238" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.3291815" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.33296824" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -318,9 +326,10 @@
     </layout-to-restore>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/train2.py" />
     <entry file="file://$PROJECT_DIR$/../mygan/cyclegan/CycleGAN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-500">
+        <state relative-caret-position="260">
           <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
@@ -330,7 +339,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../mygan/cyclegan/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
+        <state relative-caret-position="715">
           <caret line="182" selection-start-line="182" selection-end-line="182" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
@@ -338,53 +347,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1140">
-          <caret line="147" column="19" selection-start-line="147" selection-start-column="19" selection-end-line="147" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/../MCNN_REPRODUCTION/src/configs.py">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/train2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1815">
-          <caret line="12" column="12" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/graph.pbtxt">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/ops.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1960">
-          <caret line="98" selection-start-line="98" selection-end-line="98" />
-          <folding>
-            <element signature="e#49#72#0" expanded="true" />
-          </folding>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mcnn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="45" selection-start-line="45" selection-end-line="45" />
+        <state relative-caret-position="273">
+          <caret line="77" column="14" selection-start-line="77" selection-start-column="14" selection-end-line="77" selection-end-column="14" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="103" selection-start-line="103" selection-end-line="103" />
+          <folding>
+            <element signature="e#49#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1533">
+          <caret line="505" column="3" selection-start-line="505" selection-start-column="3" selection-end-line="505" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../MCNN_REPRODUCTION/src/training.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1096">
+          <caret line="121" column="8" lean-forward="true" selection-start-line="121" selection-start-column="8" selection-end-line="121" selection-end-column="8" />
+          <folding>
+            <element signature="e#87#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="79" column="44" selection-start-line="79" selection-start-column="44" selection-end-line="79" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1272">
+          <caret line="80" column="45" lean-forward="true" selection-start-line="80" selection-start-column="45" selection-end-line="80" selection-end-column="45" />
         </state>
       </provider>
     </entry>
