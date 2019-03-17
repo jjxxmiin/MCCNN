@@ -2,6 +2,8 @@ from utils import *
 import tensorflow as tf
 import mcnn as model
 from ops import mse
+from tensorflow.python.framework import graph_io
+
 import matplotlib.image as mpimg
 import scipy.io as sio
 
@@ -17,7 +19,10 @@ epoch = 200000
 image = tf.placeholder(tf.float32,shape=[1,None,None,3])
 ground_truth = tf.placeholder(tf.float32,shape=[1,None,None,1])
 
+
+# model
 estimate = model.multi_column_cnn_relu(image)
+
 
 # MSE
 loss = mse(estimate,ground_truth)
@@ -57,7 +62,6 @@ with tf.Session() as sess:
 
         for i in range(iteration):
             img,gt_dmp,gt_count = read_train_data(train_image_list[i],train_gt_list[i],scale=4)
-
             img = input_normalization(img)
 
             _,prediction,cost,summary_str = sess.run([train,estimate,loss,summary],feed_dict={image : img ,
@@ -70,6 +74,10 @@ with tf.Session() as sess:
             counter += 1
 
             print("[{} / {}] [{} / {}] LOSS : {} pre : {} gt : {}".format(epoch,e,iteration,i,cost,prediction.sum(),gt_count))
+
+            # frozen = tf.graph_util.convert_variables_to_constants(sess, sess.graph_def, ["mcnn/dmp_conv1/Relu"])
+
+            # graph_io.write_graph(frozen, './', 'graph.pb', as_text=False)
 
         if e % 101 == 0:
             absolute_error = 0.0
@@ -107,9 +115,6 @@ with tf.Session() as sess:
             tf.train.write_graph(sess.graph_def, '.', 'graph.pbtxt')
 
         train_image_list, train_gt_list, _ = get_data_list(dataset,mode='train')
-
-
-
 
 
 
