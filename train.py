@@ -16,12 +16,12 @@ sample_dir = "sample"
 learning_rate = 1e-6
 epoch = 200000
 
-image = tf.placeholder(tf.float32,shape=[1,None,None,3])
-ground_truth = tf.placeholder(tf.float32,shape=[1,None,None,1])
+image = tf.placeholder(tf.float32,shape=[None,None,None,3])
+ground_truth = tf.placeholder(tf.float32,shape=[None,None,None,1])
 
 
 # model
-estimate = model.multi_column_cnn_relu(image)
+estimate = model.multi_column_cnn(image)
 
 
 # MSE
@@ -68,7 +68,6 @@ with tf.Session() as sess:
                                                        ground_truth : gt_dmp
                                                        })
 
-            input_denormalization(prediction)
 
             writer.add_summary(summary_str, counter)
             counter += 1
@@ -95,8 +94,6 @@ with tf.Session() as sess:
                 _, prediction, cost, summary_str = sess.run([train, estimate, loss, summary], feed_dict={image: img,
                                                                                                          ground_truth: gt_dmp
                                                                                                          })
-
-                prediction = input_denormalization(prediction)
 
                 absolute_error = absolute_error + np.abs(np.subtract(gt_count, prediction.sum())).mean()
                 square_error = square_error + np.power(np.subtract(gt_count, prediction.sum()), 2).mean()

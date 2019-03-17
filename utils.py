@@ -429,8 +429,11 @@ def read_test_data(img_path, gt_path, scale=8, deconv_is_used=False, knn_phase=T
 
     # read the .mat file in dataset
     label_data = loadmat(gt_path)
+    # 이미지 사람좌표
     points = label_data['image_info'][0][0]['location'][0][0]
+    # 이미지 사람수
     crowd_count = label_data['image_info'][0][0]['number'][0][0]
+    
     h, w = ori_crowd_img.shape[0], ori_crowd_img.shape[1]
 
     if deconv_is_used:
@@ -445,13 +448,19 @@ def read_test_data(img_path, gt_path, scale=8, deconv_is_used=False, knn_phase=T
     scaled_crowd_img, scaled_points = get_scaled_crowd_image_and_points(ori_crowd_img, points, scale=scale)
     # scaled_crowd_count = crowd_count
     scaled_crowd_img_size = [scaled_crowd_img.shape[0], scaled_crowd_img.shape[1]]
+    # 머리크기 최소값
     scaled_min_head_size = min_head_size / scale
+    # 머리크기 최대 값
     scaled_max_head_size = max_head_size / scale
 
-    # after cropped and scaled
+
+    # 밀도맵 구하기
     density_map = get_density_map(scaled_crowd_img_size, scaled_points, knn_phase, k, scaled_min_head_size, scaled_max_head_size)
+    # 학습 이미지
     ori_crowd_img = ori_crowd_img.reshape((1, ori_crowd_img.shape[0], ori_crowd_img.shape[1], ori_crowd_img.shape[2]))
+    # 사람수
     crowd_count = np.asarray(crowd_count).reshape((1, 1))
+    # 밀도맵
     scaled_density_map = density_map.reshape((1, density_map.shape[0], density_map.shape[1], 1))
 
     return ori_crowd_img, scaled_density_map, crowd_count
