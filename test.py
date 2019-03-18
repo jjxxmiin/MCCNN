@@ -1,17 +1,27 @@
 import tensorflow as tf
+import utils
+import ops
+from tensorflow.contrib import slim
 import mcnn
 import cv2
 from utils import load,show_density_map
 
+file = "IMG_23"
+
 checkpoint_dir = "checkpoint"
-test_img_path ="G:/ShanghaiTech/part_B/test_data/images/IMG_20.jpg"
+test_img_path ="G:/ShanghaiTech/part_B/test_data/images/" + file + ".jpg"
+test_dmp_path ="G:/ShanghaiTech/part_B/test_data/ground-truth/GT_" + file + ".mat"
 
-test_img = cv2.imread(test_img_path)
+img, gt_dmp, gt_count = utils.read_test_data(test_img_path, test_dmp_path, scale=4)
 
-test = tf.placeholder(tf.float32,[1,None,None,3])
+test = tf.placeholder(tf.float32,shape=[None,None,None,3])
+
+estimate = mcnn.multi_column_cnn(test)
+saver = tf.train.Saver()
+init = tf.global_variables_initializer()
 
 with tf.Session() as sess:
-    saver = tf.train.Saver()
+    sess.run(init)
 
     could_load, checkpoint_counter = load(checkpoint_dir, sess, saver)
 
@@ -21,10 +31,14 @@ with tf.Session() as sess:
         print(" [!] Load failed...")
         exit(0)
 
-    estimate = mcnn.multi_column_cnn(test,scope='test')
+    img = utils.input_normalization(img)
 
-    prediction= sess.run([estimate], feed_dict={test: test_img})
+    prediction= sess.run(estimate, feed_dict={test: img})
 
     print(prediction.sum())
-    
-    show_density_map(prediction)
+    print(gt_count)
+
+    #show_density_map(gt_dmp[-1,:,:,-1])
+
+
+

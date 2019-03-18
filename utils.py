@@ -1,15 +1,15 @@
 import tensorflow as tf
+from tensorflow.python.tools import freeze_graph
+from tensorflow.python.tools import optimize_for_inference_lib
 import cv2 as cv
-from scipy import misc
-from scipy.io import loadmat
 import matplotlib.pyplot as plt
 import os, random
 import numpy as np
+from scipy import misc
+from scipy.io import loadmat
 from tqdm import tqdm
-import request
-import math
-import zipfile
-import glob
+import request,math,zipfile,glob
+
 
 # https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/
 # https://people.eecs.berkeley.edu/~tinghuiz/projects/pix2pix/datasets/
@@ -162,6 +162,7 @@ def load(checkpoint_dir,sess,saver):
     ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
     if ckpt and ckpt.model_checkpoint_path:
         ckpt_name = os.path.basename(ckpt.model_checkpoint_path)
+        print(" [*] Success to read {}".format(ckpt_name))
         saver.restore(sess, os.path.join(checkpoint_dir, ckpt_name))
         counter = int(next(re.finditer("(\d+)(?!.*\d)", ckpt_name)).group(0))
         print(" [*] Success to read {}".format(ckpt_name))
@@ -475,48 +476,6 @@ def show_density_map(density_map):
     plt.imshow(density_map, cmap='jet')
     plt.show()
 
-'''
-a,b,c = get_data_list("G:\ShanghaiTech\part_A")
-print(a[1])
-# Load the image and ground truth
-img, gt_dmp, gt_count = read_train_data(a[1],b[1])
-
-sum = np.sum(np.sum(gt_dmp))
-
-print(sum, gt_count)
-
-
-dataset = 'A'
-# training dataset
-img_root_dir = r'G:/ShanghaiTech/part_' + dataset + r'/train_data/images/'
-gt_root_dir = r'G:/ShanghaiTech/part_' + dataset + r'/train_data/ground-truth/'
-# testing dataset
-val_img_root_dir = r'G:/ShanghaiTech/part_' + dataset + r'/test_data/images/'
-val_gt_root_dir = r'G:/ShanghaiTech/part_' + dataset + r'/test_data/ground-truth/'
-
-# training dataset file list
-img_file_list = os.listdir(img_root_dir)
-gt_img_file_list = os.listdir(gt_root_dir)
-
-# testing dataset file list
-val_img_file_list = os.listdir(val_img_root_dir)
-val_gt_file_list = os.listdir(val_gt_root_dir)
-
-print(img_file_list)
-img_path = img_root_dir + img_file_list[0]
-gt_path = gt_root_dir + gt_img_file_list[0]
-
-img, gt_dmp, gt_count = read_train_data(img_path, gt_path, scale=4)
-print(gt_count)
-
-train_image_list, train_gt_list, iteration = get_data_list('A',mode='train')
-img,gt_dmp,gt_count = read_train_data(train_image_list[0],train_gt_list[0],scale=4)
-print(gt_count)
-'''
-import tensorflow as tf
-from tensorflow.python.tools import freeze_graph
-from tensorflow.python.tools import optimize_for_inference_lib
-
 
 def coldGraph(sess,
               model_name,
@@ -583,3 +542,41 @@ def coldGraph(sess,
     f.write(output_graph_def.SerializeToString())
 
 
+'''
+a,b,c = get_data_list("G:\ShanghaiTech\part_A")
+print(a[1])
+# Load the image and ground truth
+img, gt_dmp, gt_count = read_train_data(a[1],b[1])
+
+sum = np.sum(np.sum(gt_dmp))
+
+print(sum, gt_count)
+
+
+dataset = 'A'
+# training dataset
+img_root_dir = r'G:/ShanghaiTech/part_' + dataset + r'/train_data/images/'
+gt_root_dir = r'G:/ShanghaiTech/part_' + dataset + r'/train_data/ground-truth/'
+# testing dataset
+val_img_root_dir = r'G:/ShanghaiTech/part_' + dataset + r'/test_data/images/'
+val_gt_root_dir = r'G:/ShanghaiTech/part_' + dataset + r'/test_data/ground-truth/'
+
+# training dataset file list
+img_file_list = os.listdir(img_root_dir)
+gt_img_file_list = os.listdir(gt_root_dir)
+
+# testing dataset file list
+val_img_file_list = os.listdir(val_img_root_dir)
+val_gt_file_list = os.listdir(val_gt_root_dir)
+
+print(img_file_list)
+img_path = img_root_dir + img_file_list[0]
+gt_path = gt_root_dir + gt_img_file_list[0]
+
+img, gt_dmp, gt_count = read_train_data(img_path, gt_path, scale=4)
+print(gt_count)
+
+train_image_list, train_gt_list, iteration = get_data_list('A',mode='train')
+img,gt_dmp,gt_count = read_train_data(train_image_list[0],train_gt_list[0],scale=4)
+print(gt_count)
+'''

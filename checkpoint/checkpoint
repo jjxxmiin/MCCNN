@@ -1,0 +1,6 @@
+model_checkpoint_path: "mcnn.ckpt-720301"
+all_model_checkpoint_paths: "mcnn.ckpt-600301"
+all_model_checkpoint_paths: "mcnn.ckpt-630301"
+all_model_checkpoint_paths: "mcnn.ckpt-660301"
+all_model_checkpoint_paths: "mcnn.ckpt-690301"
+all_model_checkpoint_paths: "mcnn.ckpt-720301"
