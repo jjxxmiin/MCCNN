@@ -12,7 +12,7 @@ Single-Image Crowd Counting via Multi-Column Convolutional Neural Network
 
 [[paper](https://www.semanticscholar.org/paper/Single-Image-Crowd-Counting-via-Multi-Column-Neural-Zhang-Zhou/427d6d9bc05b07c85fc6b2e52f12132f79a28f6c)]
 
-논문 읽으면서 정리 : [[Here](https://jjeamin.github.io/people/counting/2019/03/08/MCNN/)]
+논문 읽으면서 정리 : [[Here](https://jjeamin.github.io/paper/2019/03/08/MCNN/)]
 
 # reference
 - https://www.semanticscholar.org/paper/Single-Image-Crowd-Counting-via-Multi-Column-Neural-Zhang-Zhou/427d6d9bc05b07c85fc6b2e52f12132f79a28f6c
